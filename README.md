@@ -1,8 +1,7 @@
 react
-typescript
+"typescript"
 vite
 tailwind
-
 threejs
 
-add a "what i'm working on" section
+TODO: expand on the readme section
