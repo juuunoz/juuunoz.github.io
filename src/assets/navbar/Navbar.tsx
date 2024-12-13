@@ -1,66 +1,46 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { NavbarObject } from './navbar-interface';
 
 //TODO: Figure out how to make this sticky when we scroll past it
-//TODO: Figure out why changing position to absolute breaks the inherited selector left animation
+//TODO: Make selector right value responsive to the size of the first element in navbar
+
 function Navbar() {
+
     const navbarRef = useRef<NavbarObject>(null);
+    const navbarWrapperRef = useRef<NavbarObject>(null)
+
     const [selectorState, setSelectorState] = useState({
-        left: 10,
-        right: 68
+        left: 12,
+        right: 75 
     });
 
     const [selectorStateHard, setSelectorStateHard] = useState({
-        left: 10,
-        right: 68
+        left: 12,
+        right: 75
     });
 
-    const [navbarLeftOffset, setNavbarLeftOffset] = useState(2);
-
-    /*
-    let sticky: number = navbarRef.current ? navbarRef.current.offsetTop : 999;
-
-    function stickyOrNot() {
-        if (window.scrollY >= sticky) {
-            navbarRef.current.classList.add("sticky");
-        } else {
-            navbarRef.current.classList.remove("sticky");
-        }
-    }
-    */
-
     function mouseEnterNavButton(e: MouseEvent) {
-        console.log("enter");
         e.preventDefault();
-        //move selector left and right as needed
-        console.log(e.clientX - navbarRef.current.offsetLeft);
-        console.log(selectorState.left);
 
-        if (e.clientX - navbarRef.current.offsetLeft < selectorState.left) {
-            //move left side right
+        if (e.clientX - navbarWrapperRef.current.offsetLeft < selectorState.left) {
             setSelectorState({
-                left: e.target.offsetLeft - navbarRef.current.offsetLeft,
+                left: e.target.offsetLeft,
                 right: selectorState.right
             });
         } else if (e.clientX > selectorState.right) {
             setSelectorState({
                 left: selectorState.left,
-                right:
-                    e.target.offsetLeft +
-                    e.target.offsetWidth -
-                    navbarRef.current.offsetLeft
+                right: e.target.offsetLeft + e.target.offsetWidth
             });
         }
     }
 
     function mouseLeaveNavButton(e: MouseEvent) {
-        console.log("leave");
         setSelectorState(selectorStateHard);
     }
 
     function clickNavButton(e: MouseEvent) {
         e.preventDefault();
-        console.log("click");
         let x = e.target.offsetLeft - navbarRef.current.offsetLeft;
         setSelectorState({
             left: x,
@@ -97,46 +77,59 @@ function Navbar() {
     }
     */
 
+    useEffect(() => {
+        setSelectorStateHard({
+            left: navbarRef.current.offsetLeft + 5,
+            right: selectorState.right
+        })
+
+        setSelectorState({
+            left: navbarRef.current.offsetLeft + 5,
+            right: selectorState.right
+        })
+     }, []);
+
     return (
       <div id="navbar-wrapper">
-          <div id="navbar-container">
-              <div id="navbar" ref={navbarRef}>
-                <div
+          <div id="navbar-container" className="" ref={navbarWrapperRef}>
+                <div id="navbar" ref={navbarRef}>
+                    <div
                         className="item"
                         id="home"
                         onClick={(e) => clickNavButton(e)}
                         onMouseEnter={(e) => mouseEnterNavButton(e)}
                         onMouseLeave={(e) => mouseLeaveNavButton(e)}
                     >
-                        Home
-                  </div>
-                  <div
-                      className="item"
-                      id="code"
-                      onClick={(e) => clickNavButton(e)}
-                      onMouseEnter={(e) => mouseEnterNavButton(e)}
-                      onMouseLeave={(e) => mouseLeaveNavButton(e)}
-                  >
-                      Projects
-                  </div>
-                  <div
-                      className="item"
-                      id="resume+contact"
-                      onClick={(e) => clickNavButton(e)}
-                      onMouseEnter={(e) => mouseEnterNavButton(e)}
-                      onMouseLeave={(e) => mouseLeaveNavButton(e)}
-                  >
-                      Resume + Contact
-                  </div>
-              </div>
-              <div
-                  id="navbar-selector"
-                  style={{
-                      width: selectorState.right - selectorState.left + "px",
-                      height: "10px",
-                      marginLeft: selectorState.left + "px"
-                  }}
-              ></div>
+                        HOME
+                    </div>
+                    <div
+                        className="item"
+                        id="code"
+                        onClick={(e) => clickNavButton(e)}
+                        onMouseEnter={(e) => mouseEnterNavButton(e)}
+                        onMouseLeave={(e) => mouseLeaveNavButton(e)}
+                    >
+                        PROJECTS
+                    </div>
+                    <div
+                        className="item"
+                        id="resume+contact"
+                        onClick={(e) => clickNavButton(e)}
+                        onMouseEnter={(e) => mouseEnterNavButton(e)}
+                        onMouseLeave={(e) => mouseLeaveNavButton(e)}
+                    >
+                        RESUME + CONTACT
+                    </div>
+                </div>
+                <div
+                    id="navbar-selector"
+                    className="mt-1 pt-6 pb-6"
+                    style={{
+                        width: selectorState.right - selectorState.left + "px",
+                        height: "10px",
+                        marginLeft: selectorState.left + "px"
+                    }}
+                ></div>
           </div>
       </div>
   );
