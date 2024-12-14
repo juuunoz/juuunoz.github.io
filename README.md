@@ -3,5 +3,6 @@ react
 vite
 tailwind
 threejs
+framer motion
 
 TODO: expand on the readme section
