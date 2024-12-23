@@ -1,8 +1,8 @@
 react
-typescript
+"typescript"
 vite
 tailwind
-
 threejs
+framer motion
 
-add a "what i'm working on" section
+TODO: expand on the readme section
