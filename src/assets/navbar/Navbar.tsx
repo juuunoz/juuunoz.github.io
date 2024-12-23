@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
+import { Link } from 'react-router'
 import { NavbarObject } from './navbar-interface';
 
 //TODO: Figure out how to make this sticky when we scroll past it
 //TODO: Make selector right value responsive to the size of the first element in navbar
-
+//TODO: Implement navbar functionality
+//TODO: Vertically center selector (gets out of line when vertical)
 function Navbar() {
 
     const navbarRef = useRef<NavbarObject>(null);
@@ -39,7 +41,7 @@ function Navbar() {
         setSelectorState(selectorStateHard);
     }
 
-    function clickNavButton(e: MouseEvent) {
+    function clickNavButton(e: MouseEvent, name: string) {
         e.preventDefault();
         let x = e.target.offsetLeft - navbarRef.current.offsetLeft;
         setSelectorState({
@@ -51,6 +53,10 @@ function Navbar() {
             left: x,
             right: x + e.currentTarget.offsetWidth
         });
+
+        console.log('clicked ')
+        console.log(name)
+        navbarWrapperRef.current.scrollIntoView({behavior: "smooth"})
     }
 
     /* TODO: Turn the navigation bar labels into a component */
@@ -91,30 +97,36 @@ function Navbar() {
 
     return (
       <div id="navbar-wrapper">
-          <div id="navbar-container" className="" ref={navbarWrapperRef}>
-                <div id="navbar" ref={navbarRef}>
+          <div id="navbar-container" ref={navbarWrapperRef}>
+                <div id="navbar" className="bg-white" ref={navbarRef}>
                     <div
-                        className="item"
-                        id="home"
-                        onClick={(e) => clickNavButton(e)}
+                        className="item font-bold"
+                        onClick={(e) => clickNavButton(e, "home")}
                         onMouseEnter={(e) => mouseEnterNavButton(e)}
                         onMouseLeave={(e) => mouseLeaveNavButton(e)}
                     >
                         HOME
                     </div>
                     <div
-                        className="item"
-                        id="code"
-                        onClick={(e) => clickNavButton(e)}
+                        className="item font-bold"
+                        onClick={(e) => clickNavButton(e, "about")}
+                        onMouseEnter={(e) => mouseEnterNavButton(e)}
+                        onMouseLeave={(e) => mouseLeaveNavButton(e)}
+                    >
+                        ABOUT
+                    </div>
+                    <div
+                        className="item font-bold"
+                        onClick={(e) => clickNavButton(e, "projects")}
                         onMouseEnter={(e) => mouseEnterNavButton(e)}
                         onMouseLeave={(e) => mouseLeaveNavButton(e)}
                     >
                         PROJECTS
                     </div>
                     <div
-                        className="item"
+                        className="item font-bold"
                         id="resume+contact"
-                        onClick={(e) => clickNavButton(e)}
+                        onClick={(e) => clickNavButton(e, "resume+contact")}
                         onMouseEnter={(e) => mouseEnterNavButton(e)}
                         onMouseLeave={(e) => mouseLeaveNavButton(e)}
                     >

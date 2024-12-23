@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/react-router": "^5.1.20",
     "@types/three": "^0.168.0",
+    "framer-motion": "^11.14.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-router": "^7.0.2",
     "three": "^0.168.0"
   },
   "devDependencies": {

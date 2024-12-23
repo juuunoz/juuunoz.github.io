@@ -10,6 +10,11 @@
   padding: 12px;
 }
 
+#header {
+  -webkit-text-stroke: 1px black;
+  color: white;
+}
+
 #navbar {
   cursor: pointer;
   display: inline-block;
@@ -23,15 +28,13 @@
 
 #navbar-container {
   position: absolute;
-  top: 50%;
+  top: 37%;
   display: flex;
 }
 
 #navbar-selector {
   pointer-events: none;
   position: absolute;
-  /* margin: 10px; /* these values are not reflexive */
-  /* padding-top: 25px;  these values are not reflexive */
   outline-style: solid;
   outline-color: black;
   outline-width: 1px;
@@ -41,4 +44,11 @@
 #navbar-wrapper {
   display: flex;
   justify-content: center;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -9999;
 }
