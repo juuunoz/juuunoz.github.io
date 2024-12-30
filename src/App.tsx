@@ -8,7 +8,7 @@ import { useState } from 'react'
 function PlacholderModule({title, body}: {title: string, body: string[][]})
 {
   return (
-    <div className="outline outline-1 rounded-3xl text-center p-2 m-2 w-[325px]">
+    <div className="outline outline-1 rounded-3xl text-center p-3 m-3 grow shrink basis-0">
         <h1 className="font-bold text-l ">{title}</h1>
         {body.map((entry) => (<a href={entry[1]}><p className="text-l pb-3">{entry[0]}</p></a>))}
         
@@ -22,13 +22,13 @@ function Placeholder() {
   if (appState) {
       return (
         <div className="flex items-center justify-center">
-          <div className="outline outline-1 bg-white rounded-3xl mt-[150px] w-1/2">
+          <div className="outline outline-1 bg-white rounded-3xl mt-[150px] w-1/3">
               <div className="ml-10 mb-5">
                 <h1 className="text-6xl font-bold">JUNO ZHANG</h1>
                 <p className="text-l"><a>RESUME</a> | <a href="https://www.linkedin.com/in/juno-zhang/">LINKEDIN</a> | <a href="https://github.com/juuunoz">GITHUB</a> | CONTACT</p>
               </div>
               
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center p-4">
                 <div className="flex flex-wrap">
                   <PlacholderModule 
                     title={"What I'm reading"} 
