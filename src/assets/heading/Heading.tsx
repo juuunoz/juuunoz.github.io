@@ -1,5 +1,3 @@
-import Navbar from "../navbar/Navbar"
-
 //TODO: Figure out how to lock this to navbar, so vertical resizing doesn't break everything
 function Heading() {
     return(

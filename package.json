@@ -1,12 +1,12 @@
 {
   "name": "juno-project",
   "private": true,
-  "version": "0.0.0",
-  "homepage": "https://juuunoz.github.io",
+  "version": "0.1.0",
+  "homepage": "https://juuunoz.github.io/",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
