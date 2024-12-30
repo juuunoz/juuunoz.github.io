@@ -8,9 +8,9 @@ import { useState } from 'react'
 function PlacholderModule({title, body}: {title: string, body: string[][]})
 {
   return (
-    <div className="outline outline-1 rounded-3xl text-center p-5 m-3 w-[325px]">
-        <h1 className="font-bold text-2xl ">{title}</h1>
-        {body.map((entry) => (<a href={entry[1]}><p className="text-2xl pb-3">{entry[0]}</p></a>))}
+    <div className="outline outline-1 rounded-3xl text-center p-2 m-2 w-[325px]">
+        <h1 className="font-bold text-l ">{title}</h1>
+        {body.map((entry) => (<a href={entry[1]}><p className="text-l pb-3">{entry[0]}</p></a>))}
         
     </div>
   )
@@ -24,8 +24,8 @@ function Placeholder() {
         <div className="flex items-center justify-center">
           <div className="outline outline-1 bg-white rounded-3xl mt-[150px] w-1/2">
               <div className="ml-10 mb-5">
-                <h1 className="text-8xl font-bold">JUNO ZHANG</h1>
-                <p className="text-2xl"><a>RESUME</a> | <a href="https://www.linkedin.com/in/juno-zhang/">LINKEDIN</a> | <a href="https://github.com/juuunoz">GITHUB</a> | CONTACT</p>
+                <h1 className="text-6xl font-bold">JUNO ZHANG</h1>
+                <p className="text-l"><a>RESUME</a> | <a href="https://www.linkedin.com/in/juno-zhang/">LINKEDIN</a> | <a href="https://github.com/juuunoz">GITHUB</a> | CONTACT</p>
               </div>
               
               <div className="flex items-center justify-center">
@@ -43,7 +43,7 @@ function Placeholder() {
                 </div>
               </div>
 
-              <div className="bg-black text-white rounded-b-3xl text-right p-4 w-full"> <button onClick={() => (setAppState(false))}>WEBSITE UNDER CONSTRUCTION, TAKE A LOOK :)</button> </div>
+              <div className="bg-black text-white rounded-b-xl text-right p-4 w-full mt-5"> <button onClick={() => (setAppState(false))}>WEBSITE UNDER CONSTRUCTION, TAKE A LOOK :)</button> </div>
           </div>
         </div>
       );
