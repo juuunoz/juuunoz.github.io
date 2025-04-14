@@ -35,7 +35,7 @@ function Placeholder() {
                     body={[["Erewhon", "https://en.wikipedia.org/wiki/Erewhon"], ["Porkopolis", "https://www.dukeupress.edu/porkopolis"], ["I'm Glad My Mom Died", "https://en.wikipedia.org/wiki/I%27m_Glad_My_Mom_Died"]]}/>
                   <PlacholderModule 
                     title={"What I'm learning"} 
-                    body={[["Sewing", ""], ["Piano (Waltz in C# Minor)", "https://www.youtube.com/watch?v=SUT_0c2QVzo"], ["Intro to the Theory of Computation", "https://mog.dog/files/SP2019/Sipser_Introduction.to.the.Theory.of.Computation.3E.pdf"], ["ThreeJS", "https://threejs.org/"], ["Gouache Paintinge and Inking", ""]]}/>
+                    body={[["Sewing", ""], ["Piano (Waltz in C# Minor)", "https://www.youtube.com/watch?v=SUT_0c2QVzo"], ["Intro to the Theory of Computation", "https://mog.dog/files/SP2019/Sipser_Introduction.to.the.Theory.of.Computation.3E.pdf"], ["ThreeJS", "https://threejs.org/"], ["Gouache Painting and Inking", ""]]}/>
                   <PlacholderModule 
                     title={"What I'm making"} 
                     body={[["Bestie Bag", "https://www.blackbirdfabrics.com/collections/bestie-bag-pattern/products/bestie-bag"], ["This Website", "https://github.com/juuunoz/juuunoz.github.io"]]}/>
