@@ -32,13 +32,13 @@ function Placeholder() {
                 <div className="flex flex-wrap">
                   <PlacholderModule 
                     title={"What I'm reading"} 
-                    body={[["Erewhon by Samuel Butler", "https://en.wikipedia.org/wiki/Erewhon"], ["Plays Well With Others by Eric Barker", "https://www.goodreads.com/en/book/show/58782858-plays-well-with-others"]]}/>
+                    body={[["Erewhon", "https://en.wikipedia.org/wiki/Erewhon"], ["Porkopolis", "https://www.dukeupress.edu/porkopolis"], ["I'm Glad My Mom Died", "https://en.wikipedia.org/wiki/I%27m_Glad_My_Mom_Died"]]}/>
                   <PlacholderModule 
                     title={"What I'm learning"} 
-                    body={[["Classical CV Image Pre-Processing Techniques for DL Models", "https://docs.google.com/presentation/d/e/2PACX-1vS30jLR-Ug0fgQnVPeE86j8X6mu97Xoj2B93Qms4JMM02SdJqR48-2MLIVTd0Wo1tzBVJih3IVPDPvm/pub?start=false&loop=false&delayms=3000"], ["Piano (Waltz in C# Minor)", "https://www.youtube.com/watch?v=SUT_0c2QVzo"], ["Intro to the Theory of Computation", "https://mog.dog/files/SP2019/Sipser_Introduction.to.the.Theory.of.Computation.3E.pdf"], ["ThreeJS", "https://threejs.org/"]]}/>
+                    body={[["Sewing", ""], ["Piano (Waltz in C# Minor)", "https://www.youtube.com/watch?v=SUT_0c2QVzo"], ["Intro to the Theory of Computation", "https://mog.dog/files/SP2019/Sipser_Introduction.to.the.Theory.of.Computation.3E.pdf"], ["ThreeJS", "https://threejs.org/"], ["Gouache Paintinge and Inking", ""]]}/>
                   <PlacholderModule 
                     title={"What I'm making"} 
-                    body={[["How Many Fingers", "https://github.com/juuunoz/how-many-fingers"], ["This Website", "https://github.com/juuunoz/juuunoz.github.io"]]}/>
+                    body={[["Bestie Bag", "https://www.blackbirdfabrics.com/collections/bestie-bag-pattern/products/bestie-bag"], ["This Website", "https://github.com/juuunoz/juuunoz.github.io"]]}/>
                     
                 </div>
               </div>
