@@ -1,6 +1,8 @@
 
-import Main from "./assets/main/Main"
 import { useState } from 'react'
+import { NavbarInstance } from './assets/navbar/navbar'
+
+/*
 
 //TODO: Make each section a component (so they can be navigated to)
 //TODO: Fix project selector buttons [DONE]
@@ -52,12 +54,22 @@ function Placeholder() {
       return <Main isVisible={!appState}/>;
   }   
 }
+  */
 
 function App() {
 
   return (
-    <div className="">   
-      <Placeholder />
+    <div>
+      <div id="profile" className="bg-red-400">
+        profile
+      </div>
+
+      <NavbarInstance></NavbarInstance>
+
+      <div id="content" className="bg-blue-400">   
+        hello, worl
+      </div>
+
     </div>
     
   )
