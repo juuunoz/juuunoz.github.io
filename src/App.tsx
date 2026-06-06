@@ -1,12 +1,11 @@
 
 import { useState } from 'react'
 import { NavbarInstance } from './assets/navbar/navbar'
+import { motion, AnimatePresence } from "framer-motion";
 
 /*
 
-//TODO: Make each section a component (so they can be navigated to)
-//TODO: Fix project selector buttons [DONE]
-//TODO: Add project selector button functionality
+//TODO: change the styling so its a grid instead of flexbox
 function PlacholderModule({title, body}: {title: string, body: string[][]})
 {
   return (
@@ -56,18 +55,58 @@ function Placeholder() {
 }
   */
 
+const BodyEntry = ({bodyContentNumber, currentBodyContentNumber, bodyContent} : {bodyContentNumber: number, currentBodyContentNumber: number, bodyContent: string}) => {
+    return (
+      <AnimatePresence mode="wait">
+        {bodyContentNumber == currentBodyContentNumber ?
+          <motion.div 
+            id="bodyContent"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="bg-blue-100 absolute"
+            >
+              {bodyContent}
+          </motion.div>
+        : null}
+      </AnimatePresence>
+    );
+  };
+
 function App() {
+  const [bodyContentNumber, setBodyContentNumber] = useState(0);
+
+  
 
   return (
-    <div>
-      <div id="profile" className="bg-red-400">
-        profile
-      </div>
+    <div className="center m-[10vw] bg-blue-300">
+      
+      <div className="p-10 border-2 border-solid border-black flex flex-col md:flex-row flex-wrap">
+        
+        <div id="profile" className="md:m-10 m-5 bg-red-400 w-[80%] md:w-[35%] shrink-0 ml-auto mr-auto">
+          <img 
+            className="object-contain"
+            src="src/assets/profile.jpg"/>
+        </div>
 
-      <NavbarInstance></NavbarInstance>
+        <div className="flex-1 md:m-10 m-5 min-w-0 bg-red-100" id="content">
+          <NavbarInstance setContent={setBodyContentNumber}/>
 
-      <div id="content" className="bg-blue-400">   
-        hello, worl
+          <div id="body" className="bg-blue-400 relative min-h-[200px]">
+            <BodyEntry
+              bodyContentNumber={0}
+              currentBodyContentNumber={bodyContentNumber}
+              bodyContent={"the value of this content is 0"}/>
+
+            <BodyEntry
+              bodyContentNumber={1}
+              currentBodyContentNumber={bodyContentNumber}
+              bodyContent={"nevermind, it's value is now 1"}/>
+            
+          </div>
+        </div>
+
       </div>
 
     </div>
