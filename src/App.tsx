@@ -2,10 +2,17 @@
 import { useState } from 'react'
 import { NavbarInstance } from './assets/navbar/navbar'
 import { motion, AnimatePresence } from "framer-motion";
+import Markdown from 'react-markdown';
+
+import aboutMd from './markdown/about.md?raw'
+
+
+
+//TODO: add content
+//TODO: add a verticle text flip effect, and sync it with a line animation that swipes with it on the side
+//TODO: light-dark switch?
 
 /*
-
-//TODO: change the styling so its a grid instead of flexbox
 function PlacholderModule({title, body}: {title: string, body: string[][]})
 {
   return (
@@ -55,7 +62,7 @@ function Placeholder() {
 }
   */
 
-const BodyEntry = ({bodyContentNumber, currentBodyContentNumber, bodyContent} : {bodyContentNumber: number, currentBodyContentNumber: number, bodyContent: string}) => {
+const BodyEntry = ({children, bodyContentNumber, currentBodyContentNumber} : {children: React.ReactNode, bodyContentNumber: number, currentBodyContentNumber: number}) => {
     return (
       <AnimatePresence mode="wait">
         {bodyContentNumber == currentBodyContentNumber ?
@@ -65,28 +72,35 @@ const BodyEntry = ({bodyContentNumber, currentBodyContentNumber, bodyContent} : 
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="bg-blue-100 absolute"
+            className="bg-blue-100"
             >
-              {bodyContent}
+              {children}
           </motion.div>
         : null}
       </AnimatePresence>
     );
   };
 
+  const ProjectEntry = ({children, title} : {children: React.ReactNode, title: string}) => {
+    return (
+      <div>
+        <p className="text-2xl">{title}    v</p>
+        {children}
+      </div>
+    )
+  }
+
 function App() {
   const [bodyContentNumber, setBodyContentNumber] = useState(0);
 
-  
-
   return (
-    <div className="center m-[10vw] bg-blue-300">
+    <div className="center md:mt-[10%] mt-[5%] ml-auto mr-auto md:w-[65vw] w-[90vw] bg-blue-300">
+
+      <div className=" pt-[5vh] border-2 border-solid border-black flex flex-col md:flex-row flex-wrap">
       
-      <div className="p-10 border-2 border-solid border-black flex flex-col md:flex-row flex-wrap">
-        
-        <div id="profile" className="md:m-10 m-5 bg-red-400 w-[80%] md:w-[35%] shrink-0 ml-auto mr-auto">
+        <div id="profile" className="md:m-10 m-5 bg-red-400 w-[40vw] md:w-[20vw] shrink-0 ml-auto mr-auto">
           <img 
-            className="object-contain"
+            className="object-contain ml-auto mr-auto"
             src="src/assets/profile.jpg"/>
         </div>
 
@@ -97,12 +111,21 @@ function App() {
             <BodyEntry
               bodyContentNumber={0}
               currentBodyContentNumber={bodyContentNumber}
-              bodyContent={"the value of this content is 0"}/>
+              >
+                <Markdown>{aboutMd}</Markdown>
+              </BodyEntry>
 
             <BodyEntry
               bodyContentNumber={1}
               currentBodyContentNumber={bodyContentNumber}
-              bodyContent={"nevermind, it's value is now 1"}/>
+              >
+                <ProjectEntry
+                  title="project title">
+                    body content
+                </ProjectEntry>
+              </BodyEntry>
+
+
             
           </div>
         </div>
