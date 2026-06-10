@@ -101,7 +101,7 @@ function App() {
         <div id="profile" className="md:m-10 m-5 bg-red-400 w-[40vw] md:w-[20vw] shrink-0 ml-auto mr-auto">
           <img 
             className="object-contain ml-auto mr-auto"
-            src="src/assets/profile.jpg"/>
+            src="/profile.jpg"/>
         </div>
 
         <div className="flex-1 md:m-10 m-5 min-w-0 bg-red-100" id="content">

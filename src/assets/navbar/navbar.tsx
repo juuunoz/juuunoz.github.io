@@ -1,4 +1,4 @@
-import { useState, useEffect, Dispatch, SetStateAction, useRef } from "react";
+import { useState, Dispatch, SetStateAction, useRef } from "react";
 import { motion } from "framer-motion";
 
 //TODO:
