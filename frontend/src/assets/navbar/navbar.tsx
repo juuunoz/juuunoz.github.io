@@ -47,11 +47,10 @@ const Navbar = ({setContent} : {setContent: Dispatch<SetStateAction<number>>}) =
 
     return (
         <ul 
-            className="relative justify-evenly items-center flex w-[100%] bg-white p-1">
+            className="bg-white relative justify-center items-center flex w-[100%] p-1 border-solid border-black sticky top-0 z-50 text-xs">
             <Tab setPosition={setPosition} name="About" onClick={() => setContent(0)}/>
             <Tab setPosition={setPosition} name="Projects" onClick={() => setContent(1)}/>
             <Tab setPosition={setPosition} name="Thoughts" onClick={() => setContent(2)}/>
-            <Tab setPosition={setPosition} name="Contact" onClick={() => setContent(3)}/>
             <Cursor position={position}/>
         </ul>
     );
