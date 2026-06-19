@@ -19,6 +19,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors()); // Enables Cross-Origin Resource Sharing
 app.use(express.json()); // Allows parsing of JSON request bodies
 
+//TODO: Fix error codes
 //FIXME: All topic strings may need to be pre-processed to be lower-cased, and spaces replaced with underscores
 
 // Sample API Route
@@ -55,8 +56,7 @@ app.post('/notes', (req, res) => {
         )
       ).then(() => note_id);
     });
-  })
-    .then((noteId) => {
+  }).then((noteId) => {
       res.status(200).json({
         message: 'Note creation succeeded',
         noteId
@@ -68,17 +68,19 @@ app.post('/notes', (req, res) => {
 });
 
 //TODO: paginate  
-
-/**
 // Get all notes
 app.get('/notes', (req, res) => {
     db.many('SELECT * FROM notes')
     .then ((data) => {
-
+      return res.status(200).json(data);
+    }).catch((error) => {
+      if (error.result.rowCount === 0)
+        return res.status(204).json({message: "Body tea, no notes!"})
+      return res.status(500).json({message: error})
     })
 });
-*/
 
+//TODO: paginate
 // Get all notes of a certain topic
 app.get('/topics/:id/notes', (req, res) => {
 

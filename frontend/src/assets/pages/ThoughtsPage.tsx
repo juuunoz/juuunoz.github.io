@@ -1,3 +1,5 @@
+import { BodyEntry } from "../BodyEntry"
+
 const NoteEntry = ({date, content} : {date: string, content: string}) => {
     return (
         <div
@@ -21,5 +23,22 @@ export const ThoughtsRight = () => {
 export const ThoughtsLeft = () => {
     return (
         <div className="bg-purple-100">thoughts left</div>
+    )
+}
+
+export const ThoughtsPage = () => {
+    return (
+    <div className="pt-[5vh] flex flex-col md:flex-row">
+        <div className="w-full md:w-1/3 md:m-5 mt-6 ">
+            <BodyEntry>
+                left
+            </BodyEntry>
+        </div>
+        <div className="w-full md:w-2/3 md:m-5">
+            <BodyEntry>
+                right
+            </BodyEntry>
+        </div>
+    </div>
     )
 }
