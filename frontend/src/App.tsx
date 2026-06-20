@@ -2,10 +2,7 @@
 import { useState } from 'react'
 import { NavbarInstance } from './assets/Navbar'
 
-
-import project1 from './markdown/project1.md?raw'
-
-import { ThoughtsPage } from './assets/pages/ThoughtsPage';
+import ThoughtsPage from './assets/pages/ThoughtsPage';
 import { AboutPage } from './assets/pages/AboutPage';
 import { ProjectsPage } from './assets/pages/ProjectsPage';
 
