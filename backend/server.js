@@ -39,46 +39,84 @@ app.get('/testdb', (req, res) => {
 
 // Make new note
 app.post('/notes', (req, res) => {
-  const { date, topics, content } = req.body;
+  const { note_id, date, content, topics } = req.body;
 
   if (!content || !Array.isArray(topics)) {
     return res.status(400).json({ message: 'content and topics[] are required' });
   }
 
   db.tx((t) => {
-    return t.one(
-      'INSERT INTO notes (date, content) VALUES ($1, $2) RETURNING note_id',
-      [date, content]
-    ).then(({ note_id }) => {
+    return t.none(
+      'INSERT INTO notes (note_id, date, content) VALUES ($1, ($2::TIMESTAMP), $3)',
+      [note_id, date, content]
+    ).then(() => {
+      console.log(note_id)
       return t.batch(
         topics.map((topic) =>
           t.none('INSERT INTO topics (note_id, topic) VALUES ($1, $2)', [note_id, topic])
         )
-      ).then(() => note_id);
+      )
     });
-  }).then((noteId) => {
+  }).then(() => {
       res.status(200).json({
         message: 'Note creation succeeded',
-        noteId
+        note_id
       });
     })
     .catch((error) => {
-      res.status(500).json({ message: error.message });
+      res.status(500).json({ message: error });
     });
 });
 
-//TODO: paginate  
-// Get all notes
+// Using the cursor as the topmost note, return limit most recent notes
+// Get all notes (/notes?cursor=none&limit=10&topic=none)
 app.get('/notes', (req, res) => {
-    db.many('SELECT * FROM notes')
-    .then ((data) => {
-      return res.status(200).json(data);
-    }).catch((error) => {
-      if (error.result.rowCount === 0)
-        return res.status(204).json({message: "Body tea, no notes!"})
-      return res.status(500).json({message: error})
-    })
+    const cursor = req.query.cursor || "none";
+    const limit = parseInt(req.query.limit) || 10;
+    const topic = req.query.topic || "none"
+
+    if (cursor === "none" && topic === "none") {
+      // give limit number of notes
+      db.many(`
+        SELECT * FROM notes
+        ORDER BY date DESC
+        LIMIT $1;`,
+        [limit])
+      .then((data) => {
+        return res.status(200).json(data);
+      }).catch((error) => {
+        if (error.result.rowCount === 0)
+          return res.status(204).json({message: "Body tea, no notes!"})
+        return res.status(500).json({message: error})
+      })
+    } else if (cursor === "none") {
+      // give limit number of notes in the specified topic
+    } else if (topic === "none") {
+      // give limit number of notes from the given cursor
+      db.many(`
+        SELECT * FROM notes 
+        WHERE date < (SELECT date FROM notes WHERE note_id = $1)
+        ORDER BY date DESC
+        LIMIT $2;`, 
+        [cursor, limit])
+      .then((data) => {
+        return res.status(200).json(data);
+      }).catch((error) => {
+        if (error.result.rowCount === 0)
+          return res.status(204).json({message: "Body tea, no notes!"})
+        return res.status(500).json({message: error})
+      })
+    }
+    else {
+      // give limit number of notes in the specified topic, from the given cursor
+    }
 });
+
+/*
+
+
+$1 = id, $2 = limit
+*/
 
 //TODO: paginate
 // Get all notes of a certain topic
@@ -159,7 +197,7 @@ app.delete('/notes/:id', (req, res) => {
       [req.params.id]
     ).then((data) => {
       if (data.rowCount == 0)
-        return res.status(404).json({ message: `Note ${req.params.id} not found. Nothing deleted.` })
+        return res.status(204).json({ message: `Note ${req.params.id} not found. Nothing deleted.` })
       else
         return res.status(200).json({ message: `Note ${req.params.id} succesfully deleted.`})
     }).catch((error) => {
@@ -173,7 +211,7 @@ app.get('/topics', (req, res) => {
     []
   ).then((data) => {
     if (data.rowCount == 0)
-      return res.status(404).json({message: `No topics.`})
+      return res.status(204).json({message: `No topics.`})
     else
       return res.status(200).json({ data })
   }).catch((error) => {
@@ -189,7 +227,7 @@ app.delete('/topics/:id', (req, res) => {
     (SELECT topics.note_id FROM topics WHERE topics.topic = $1)`, [req.params.id]
   ).then((data) => {
     if (data.rowCount == 0)
-      return res.status(404).json({ message: `Topic ${req.params.id} not found. Nothing deleted.` })
+      return res.status(204).json({ message: `Topic ${req.params.id} not found. Nothing deleted.` })
     return res.status(200).json({ message: `Topic ${req.params.id} succesfully deleted.`})
   }).catch((error) => {
     return res.status(500).json({message: error})
