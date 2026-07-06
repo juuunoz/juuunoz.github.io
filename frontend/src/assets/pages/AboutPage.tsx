@@ -15,6 +15,7 @@ export const AboutPage = () => {
                     <br/>
                     <p className=""><a href="https://github.com/juuunoz">github</a></p>
                     <p><a href="https://www.linkedin.com/in/juno-zhang/">linkedin</a></p>
+                    <p>resume</p>
                     <br/>
                     <p>junozhangworking (at) gmail (dot) com</p>
                     <p>website inspired by <a href="https://www.computerangel.blog/shop">computer angel</a></p>

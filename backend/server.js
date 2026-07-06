@@ -45,12 +45,13 @@ app.post('/notes', (req, res) => {
     return res.status(400).json({ message: 'content and topics[] are required' });
   }
 
+  if (!topics.includes('everything')) topics.append('everything');
+
   db.tx((t) => {
     return t.none(
       'INSERT INTO notes (note_id, date, content) VALUES ($1, ($2::TIMESTAMP), $3)',
       [note_id, date, content]
     ).then(() => {
-      console.log(note_id)
       return t.batch(
         topics.map((topic) =>
           t.none('INSERT INTO topics (note_id, topic) VALUES ($1, $2)', [note_id, topic])
@@ -69,7 +70,8 @@ app.post('/notes', (req, res) => {
 });
 
 // Using the cursor as the topmost note, return limit most recent notes
-// Get all notes (/notes?cursor=none&limit=10&topic=none)
+// Get all notes /notes?cursor=none&limit=10&topic=none)
+// Filtering option /notes?topic=misc
 app.get('/notes', (req, res) => {
     const cursor = req.query.cursor || "none";
     const limit = parseInt(req.query.limit) || 10;
@@ -77,7 +79,7 @@ app.get('/notes', (req, res) => {
 
     if (cursor === "none" && topic === "none") {
       // give limit number of notes
-      db.many(`
+      db.any(`
         SELECT * FROM notes
         ORDER BY date DESC
         LIMIT $1;`,
@@ -91,9 +93,22 @@ app.get('/notes', (req, res) => {
       })
     } else if (cursor === "none") {
       // give limit number of notes in the specified topic
+      db.any(`
+        SELECT * FROM notes 
+        NATURAL JOIN 
+        (SELECT note_id FROM topics WHERE topic = $1)
+        LIMIT $2;`,
+        [topic, limit])
+        .then((data) => {
+        return res.status(200).json(data);
+        }).catch((error) => {
+          if (error.result.rowCount === 0)
+            return res.status(204).json({message: "Body tea, no notes!"})
+          return res.status(500).json({message: error})
+        })
     } else if (topic === "none") {
       // give limit number of notes from the given cursor
-      db.many(`
+      db.any(`
         SELECT * FROM notes 
         WHERE date < (SELECT date FROM notes WHERE note_id = $1)
         ORDER BY date DESC
@@ -110,18 +125,6 @@ app.get('/notes', (req, res) => {
     else {
       // give limit number of notes in the specified topic, from the given cursor
     }
-});
-
-/*
-
-
-$1 = id, $2 = limit
-*/
-
-//TODO: paginate
-// Get all notes of a certain topic
-app.get('/topics/:id/notes', (req, res) => {
-
 });
 
 // Get one note
@@ -207,8 +210,15 @@ app.delete('/notes/:id', (req, res) => {
 
 // Get all unique topics, (how to sort from most recently updated?)
 app.get('/topics', (req, res) => {
-  db.many('SELECT DISTINCT topics.topic FROM topics', 
-    []
+  const limit = parseInt(req.query.limit) || 5;
+  
+  db.many(`
+    SELECT topic, max(date) 
+    FROM (notes NATURAL JOIN topics) 
+    GROUP BY topic
+    ORDER BY max DESC
+    LIMIT $1;`, 
+    [limit]
   ).then((data) => {
     if (data.rowCount == 0)
       return res.status(204).json({message: `No topics.`})

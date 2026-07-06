@@ -5,7 +5,7 @@ import project1 from '../../markdown/project1.md?raw'
 
 const ProjectEntry = ({children, title} : {children: React.ReactNode, title: string}) => {
     return (
-      <div className="mb-10">
+      <div className="mb-20">
         <p className="text-2xl">{title}    v</p>
         <p>{children}</p>
       </div>
@@ -13,19 +13,28 @@ const ProjectEntry = ({children, title} : {children: React.ReactNode, title: str
   }
 
 export const ProjectsPage = () => {
+  const ProjectLabel = ({label} : {label: string}) => {
+  
+          return (
+              <li 
+                  className="break-words hover:outline outline-1 p-1">
+                  {label}
+              </li>)
+      }
+
     return (
     <div className="pt-[5vh] flex flex-col md:flex-row">
         <div className="w-full md:w-1/3 md:m-5 mt-6 ">
             <BodyEntry>
                 <ul>
-                <li>project 1</li>
-                <li>project 2</li>
-                <li>project 3</li>
+                <ProjectLabel label="project 1"/>
+                <ProjectLabel label="project 2"/>
+                <ProjectLabel label="project 3"/>
                 </ul>
             </BodyEntry>
 
         </div>
-        <div className="w-full md:w-2/3 md:m-5">
+        <div className="w-full md:w-2/3 md:m-5 max-h-[650px] overflow-scroll">
             <BodyEntry>
               <ProjectEntry
                 title="project 1">
