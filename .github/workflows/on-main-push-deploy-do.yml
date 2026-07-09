@@ -17,8 +17,10 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            rm -rf test
-            mkdir test
-            cd test
-            git clone git@github.com:juuunoz/juuunoz.github.io
+            rm -rf app
+            mkdir app
+            cd app
+            git clone git@github.com:juuunoz/juuunoz.github.io .
+            npm install
+          
             echo 'Deployment to digital ocean finished'
