@@ -30,8 +30,7 @@ function ThoughtsPage() {
 }
 
     const TopicEntry = ({label} : {label: string}) => {
-        const handleClick = (e: React.MouseEvent<HTMLLIElement>) => {
-            console.log("clicked " + label)
+        const handleClick = () => {
             setCurrentTopic(label)
             fetchNotes(15, -1, currentTopic)
             .then((rawNotes) => {
