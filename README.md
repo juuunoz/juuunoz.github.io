@@ -1,9 +1,9 @@
 react\
 typescript\
-vite\
 tailwind\
 express\
 postgres\
+discord.py\
 \
 deployment pipelilne set up with gh-pages\
 \
