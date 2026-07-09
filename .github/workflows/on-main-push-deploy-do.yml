@@ -3,7 +3,6 @@ name: Deploy to DigitalOcean Droplet
   push:
     branches:
       - main
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -11,16 +10,26 @@ jobs:
       - name: Deploy to DigitalOcean Droplet
         uses: appleboy/ssh-action@master
         with:
-          host: ${{secrets.HOST}}
-          username: ${{secrets.USERNAME}}
-          key: ${{secrets.KEY}}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            rm -rf app
-            mkdir app
-            cd app
-            git clone git@github.com:juuunoz/juuunoz.github.io .
+
+            rm -rf /tmp/build
+            git clone git@github.com:username/junozhang.com.git /tmp/build
+            cd /tmp/build
+
             npm install
-          
-            echo 'Deployment to digital ocean finished'
+            npm run build
+
+            sudo rm -rf /var/www/junozhang.com/*
+            sudo cp -r dist/* /var/www/junozhang.com/
+
+            sudo chown -R www-data:www-data /var/www/junozhang.com
+            sudo chmod -R 755 /var/www/junozhang.com
+
+            rm -rf /tmp/build
+
+            echo 'Deployment to junozhang.com finished'
