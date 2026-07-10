@@ -13,10 +13,13 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
-          script: |
+          script: | 
+            # clone the repo into /tmp
             rm -rf /tmp/build
-            git clone git@github.com:juuunoz/juuunoz.github.io /tmp/build
-            cd /tmp/build/frontend
+            git clone git@github.com:juuunoz/juuunoz.github.io /tmp
+
+             # create the build and put it in the right place for nginx to serve=
+            cd /tmp/frontend
             
             npm install
             npm run build
@@ -25,7 +28,5 @@ jobs:
             cp -r dist/* /var/www/junozhang.com/
 
             chmod -R 755 /var/www/junozhang.com
-
-            rm -rf /tmp/build
 
             echo 'Deployment to junozhang.com finished'
