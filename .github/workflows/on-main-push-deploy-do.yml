@@ -15,7 +15,7 @@ jobs:
           key: ${{ secrets.KEY }}
           script: | 
             # clone the repo into /tmp
-            rm -rf /tmp/build
+            rm -rf /tmp
             git clone git@github.com:juuunoz/juuunoz.github.io /tmp
 
              # create the build and put it in the right place for nginx to serve=
