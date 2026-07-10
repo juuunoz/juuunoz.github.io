@@ -19,16 +19,16 @@ jobs:
 
             rm -rf /tmp/build
             git clone git@github.com:juuunoz/juuunoz.github.io /tmp/build
-            cd /tmp/build
-
+            cd /tmp/build/frontend
+            
             npm install
             npm run build
 
-            sudo rm -rf /var/www/junozhang.com/*
-            sudo cp -r dist/* /var/www/junozhang.com/
+            rm -rf /var/www/junozhang.com/*
+            cp -r dist/* /var/www/junozhang.com/
 
-            sudo chown -R www-data:www-data /var/www/junozhang.com
-            sudo chmod -R 755 /var/www/junozhang.com
+            chown -R www-data:www-data /var/www/junozhang.com
+            chmod -R 755 /var/www/junozhang.com
 
             rm -rf /tmp/build
 
