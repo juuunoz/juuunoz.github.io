@@ -15,10 +15,6 @@ jobs:
           key: ${{ secrets.KEY }}
           script: |
               # pull files
-              if [ ! -d ~/deploy/build ]; then
-              git clone git@github.com:juuunoz/juuunoz.github.io ~/deploy/build
-              fi
-              
               cd ~/deploy/build
               git pull
               cd frontend
@@ -32,6 +28,5 @@ jobs:
               rm -rf /var/www/junozhang.com/*
               cp -r dist/* /var/www/junozhang.com/
               chmod -R 755 /var/www/junozhang.com
-              rm -rf ~/deploy/build/frontend
               
               echo 'Deployment to junozhang.com finished'
