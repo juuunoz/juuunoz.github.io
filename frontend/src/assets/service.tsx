@@ -1,4 +1,3 @@
-const SERVERADDR = 'http://localhost:5000'
 
 export async function fetchNotes (limit: number, cursor: number, topic: string) {
     try {
@@ -8,14 +7,14 @@ export async function fetchNotes (limit: number, cursor: number, topic: string) 
 
         let response;
         if (myTopic == "none" && myCursor == "-1"){
-            response = await fetch(`${SERVERADDR}/notes?limit=${myLimit}`);
+            response = await fetch(`${import.meta.env.VITE_SERVERADDR}/notes?limit=${myLimit}`);
             
         } else if (myTopic == "none") {
-            response = await fetch(`${SERVERADDR}/notes?limit=${myLimit}$cursor=${myCursor}`);
+            response = await fetch(`${import.meta.env.VITE_SERVERADDR}/notes?limit=${myLimit}$cursor=${myCursor}`);
         } else if (myCursor == "-1") {
-            response = await fetch(`${SERVERADDR}/notes?limit=${myLimit}&topic=${myTopic}`);
+            response = await fetch(`${import.meta.env.VITE_SERVERADDR}/notes?limit=${myLimit}&topic=${myTopic}`);
         } else {
-            response = await fetch(`${SERVERADDR}/notes?limit=${myLimit}&topic=${myTopic}$cursor=${myCursor}`);
+            response = await fetch(`${import.meta.env.VITE_SERVERADDR}/notes?limit=${myLimit}&topic=${myTopic}$cursor=${myCursor}`);
         }
          
         const data = await response.json();
@@ -27,7 +26,7 @@ export async function fetchNotes (limit: number, cursor: number, topic: string) 
 
 export async function fetchTopics () {
     try {
-        const response = await fetch(`${SERVERADDR}/topics?limit=5`);
+        const response = await fetch(`${import.meta.env.VITE_SERVERADDR}/topics?limit=5`);
         const res = await response.json();
         return res.data;
     } catch (err) {
