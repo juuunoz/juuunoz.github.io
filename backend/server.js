@@ -45,7 +45,7 @@ app.post('/notes', (req, res) => {
     return res.status(400).json({ message: 'content and topics[] are required' });
   }
 
-  if (!topics.includes('everything')) topics.append('everything');
+  if (!topics.includes('everything')) topics.push('everything');
 
   db.tx((t) => {
     return t.none(
