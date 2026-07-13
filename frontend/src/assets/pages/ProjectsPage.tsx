@@ -7,7 +7,7 @@ const ProjectEntry = ({children, title} : {children: React.ReactNode, title: str
     return (
       <div className="mb-20">
         <p className="text-2xl">{title}    v</p>
-        <p>{children}</p>
+        {children}
       </div>
     )
   }

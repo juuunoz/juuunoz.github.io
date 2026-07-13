@@ -31,18 +31,25 @@ function ThoughtsPage() {
 
     const TopicEntry = ({label} : {label: string}) => {
         const handleClick = () => {
+            console.log("changing topic to: ", label)
             setCurrentTopic(label)
-            fetchNotes(15, -1, currentTopic)
+            fetchNotes(15, -1, label)
             .then((rawNotes) => {
-                const newNotes : Note[] = rawNotes.map((n : Note) => (
-                {
-                    date: n.date,
-                    note_id: n.note_id,
-                    content: n.content
+                if (rawNotes.length != 0) {
+                    const newNotes : Note[] = rawNotes.map((n : Note) => (
+                    {
+                        date: n.date,
+                        note_id: n.note_id,
+                        content: n.content
+                    }
+                    ))
+                    console.log(newNotes)
+                    setNotes([...newNotes])
+                    
+                } else {
+                    setNotes([])
                 }
-                ))
-                setNotes([...newNotes])
-                }
+                } 
             )
             .catch((err) => console.error(err))
         }
@@ -64,7 +71,7 @@ function ThoughtsPage() {
         if (Math.abs(element.scrollHeight - (element.scrollTop + element.clientHeight)) <= 1) {
             fetchNotes(5, notes[notes.length - 1]["note_id"], currentTopic)
             .then((rawNotes) => {
-                if (rawNotes.length() != 0)  
+                if (rawNotes.length > 0)  
                 {
                     const newNotes : Note[] = rawNotes.map((n : Note) => (
                     {
@@ -73,16 +80,16 @@ function ThoughtsPage() {
                         content: n.content
                     }
                     ))
-
+                    
                     setNotes(prev => [...prev, ...newNotes])
                 }
             })
         }
     }
 
+    // Populate notes and topics on startup
     useEffect(() => {
-         let ignore = false;
-
+        let ignore = false;
         fetchNotes(15, -1, currentTopic)
         .then((rawNotes) => {
             const newNotes : Note[] = rawNotes.map((n : Note) => (
@@ -99,9 +106,11 @@ function ThoughtsPage() {
 
         fetchTopics()
         .then((rawTopics) => {
-            const newTopics : string[] = rawTopics.map((t : Topic) => t.topic)
+            if (rawTopics.length > 0) {
+                const newTopics : string[] = rawTopics.map((t : Topic) => t.topic)
 
-            if (!ignore) setTopics(prev => [...prev, ...newTopics])
+                if (!ignore) setTopics(prev => [...prev, ...newTopics])
+            }
         })
 
         return () => {
@@ -118,19 +127,19 @@ function ThoughtsPage() {
                         <br/>
                         They are a collection of scattered thoughts and feelings on a variety of different topics. <br/>
                         <br/>
-                        <b> Here are some handpicked topics that I'm most interested in right now: </b>
+                        <b> Below are some handpicked topics that I'm most interested in right now: </b>
                         <br/>
                     </p>
                     <ul>{coolTopics.map(t => <TopicEntry key={t} label={t}/>)}</ul>
                     <p>
                         <br/>
-                        <b>Here are the 5 most recently updated topics: </b>
+                        <b>Here are some recently updated topics: </b>
                         <br/>
                     </p>
                     <ul>{topics.map(t => <TopicEntry key={t} label={t}/>)}</ul>
                     <p>
                         <br/>
-                        <b>Here is everything all at once </b>
+                        <b>And here is everything all at once </b>
                         <br/>
                     </p>
                     <ul><TopicEntry key={"everything"} label={"everything"}/></ul>

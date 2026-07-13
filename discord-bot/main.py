@@ -20,7 +20,10 @@ def extract_hashtags_regex(text):
     tags = HASHTAG_RE.findall(text)
     cleaned = HASHTAG_RE.sub('', text)
 
-    new_tags = [tag.strip()[1:] for tag in list(tags[0]) if tag != '']
+    if tags:
+        new_tags = [tag.strip()[1:] for tag in list(tags[0]) if tag != '']
+    else:
+        new_tags = []
 
     return cleaned, new_tags
 
@@ -49,6 +52,7 @@ class MyClient(discord.Client):
 
         if response.status_code == 200 or response.status_code == 201:
             print("Success!")
+            print(topics)
             print(response.json())
         else:
             print(f"Failed with status code: {response.status_code}")
@@ -57,6 +61,7 @@ class MyClient(discord.Client):
         content, topics = extract_hashtags_regex(after.content)
         
         payload = {
+            "topics": topics,
             "content": content
         }
 

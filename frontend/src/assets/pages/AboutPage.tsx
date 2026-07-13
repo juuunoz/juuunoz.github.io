@@ -13,14 +13,14 @@ export const AboutPage = () => {
                     src="/profile.jpg"/>
                 <p className="text-right md:text-sm text-xs">
                     <br/>
-                    <p className=""><a href="https://github.com/juuunoz">github</a></p>
-                    <p><a href="https://www.linkedin.com/in/juno-zhang/">linkedin</a></p>
-                    <p>resume</p>
+                    <a href="https://github.com/juuunoz">github</a><br/>
+                    <a href="https://www.linkedin.com/in/juno-zhang/">linkedin</a><br/>
+                    resume<br/>
                     <br/>
-                    <p>junozhangworking (at) gmail (dot) com</p>
-                    <p>website inspired by <a href="https://www.computerangel.blog/shop">computer angel</a></p>
+                    junozhangworking (at) gmail (dot) com<br/>
+                    website inspired by <a href="https://www.computerangel.blog/shop">computer angel</a><br/>
                     <br/>
-                    <p className="text-center sm:hidden">v</p>
+                    className="text-center sm:hidden"<br/>
                 </p>
             </BodyEntry>
         </div>

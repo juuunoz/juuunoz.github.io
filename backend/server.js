@@ -77,7 +77,7 @@ app.get('/notes', (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const topic = req.query.topic || "none"
 
-    if (cursor === "none" && topic === "none") {
+    if (cursor === "none" && topic === "none"){
       // give limit number of notes
       db.any(`
         SELECT * FROM notes
@@ -97,6 +97,7 @@ app.get('/notes', (req, res) => {
         SELECT * FROM notes 
         NATURAL JOIN 
         (SELECT note_id FROM topics WHERE topic = $1)
+        ORDER BY date DESC
         LIMIT $2;`,
         [topic, limit])
         .then((data) => {
@@ -124,6 +125,22 @@ app.get('/notes', (req, res) => {
     }
     else {
       // give limit number of notes in the specified topic, from the given cursor
+      db.any(`
+        SELECT * FROM 
+        (SELECT * FROM notes WHERE date < (SELECT date FROM notes WHERE note_id = $1 ORDER BY date DESC)) AS notes
+        JOIN
+        (SELECT note_id FROM topics WHERE topic = $3) AS topics
+        ON notes.note_id = topics.note_id
+        ORDER BY date DESC
+        LIMIT $2;`,
+        [cursor, limit, topic])
+        .then((data) => {
+        return res.status(200).json(data);
+      }).catch((error) => {
+        if (error.result?.rowCount === 0)
+          return res.status(204).json({message: "Body tea, no notes!"})
+        return res.status(500).json({message: error})
+      })
     }
 });
 
@@ -134,7 +151,9 @@ app.get('/notes/:id', (req, res) => {
     ).then((data) => {
       return res.status(200).json({ data })
     }).catch((error) => {
-      return res.status(404).json({ message: "Note not found." });
+      if (error.result.rowCount === 0)
+        return res.status(204).json({ message: "Note not found." });
+      return res.status(500).json({ message: error });
     })
 });
 
@@ -187,10 +206,7 @@ app.patch('/notes/:id', async (req, res) => {
     return res.json({ message: 'Updated successfully' });
     
   } catch (err) {
-    console.error(err);
-    return res.status(500).json({
-      message: 'Failed to update note'
-    });
+    return res.status(500).json({message: 'Failed to update note'});
   }
 });
 
@@ -212,19 +228,19 @@ app.delete('/notes/:id', (req, res) => {
 app.get('/topics', (req, res) => {
   const limit = parseInt(req.query.limit) || 5;
   
-  db.many(`
+  db.any(`
     SELECT topic, max(date) 
     FROM (notes NATURAL JOIN topics) 
-    GROUP BY topic
-    ORDER BY max DESC
-    LIMIT $1;`, 
+    WHERE topic!='everything' 
+    GROUP BY topic 
+    ORDER BY max 
+    DESC LIMIT 5;`, 
     [limit]
   ).then((data) => {
-    if (data.rowCount == 0)
-      return res.status(204).json({message: `No topics.`})
-    else
-      return res.status(200).json({ data })
+      return res.status(200).json(data)
   }).catch((error) => {
+    if (error.result.rowCount === 0)
+      return res.status(204).json({message: `No topics.`})
     return res.status(500).json({message: error})
   })
 })
