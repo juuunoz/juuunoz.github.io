@@ -12,7 +12,7 @@ interface Topic {
   topic: string;
 }
 
-const coolTopics = ["a", "b", "c"]
+const coolTopics = ["apples", "bananas", "carrots"]
 
 function ThoughtsPage() {
     const [notes, setNotes] = useState<Note[]>([]); 
@@ -31,7 +31,6 @@ function ThoughtsPage() {
 
     const TopicEntry = ({label} : {label: string}) => {
         const handleClick = () => {
-            console.log("changing topic to: ", label)
             setCurrentTopic(label)
             fetchNotes(15, -1, label)
             .then((rawNotes) => {
@@ -57,7 +56,7 @@ function ThoughtsPage() {
         return (
             <li 
                 onClick={handleClick}
-                className="break-words hover:outline outline-1 p-1">
+                className="inline md:block break-words hover:outline outline-1 p-1">
                 {label}
             </li>)
     }
@@ -119,30 +118,45 @@ function ThoughtsPage() {
     }, [])
 
     return (
-        <div className="pt-[5vh] flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 md:m-5 mt-6 text-wrap">
+        <div className="md:pt-[5vh] flex flex-col md:flex-row">
+            <div className="w-full md:w-1/3 md:m-5 mt-6 text-wrap ">
                 <BodyEntry>
-                    <p>
+                    <div>
+                        <p>
                         These notes come from a Discord bot I configured to clean, categorize, and publish my messages. I text it throughout my day. <br/>
                         <br/>
-                        They are a collection of scattered thoughts and feelings on a variety of different topics. <br/>
-                        <br/>
+                        <div className="hidden md:block">They are a collection of scattered thoughts and feelings on a variety of different topics. <br/>
+                        <br/></div>
                         <b> Below are some handpicked topics that I'm most interested in right now: </b>
                         <br/>
-                    </p>
-                    <ul>{coolTopics.map(t => <TopicEntry key={t} label={t}/>)}</ul>
-                    <p>
-                        <br/>
-                        <b>Here are some recently updated topics: </b>
-                        <br/>
-                    </p>
-                    <ul>{topics.map(t => <TopicEntry key={t} label={t}/>)}</ul>
-                    <p>
-                        <br/>
-                        <b>And here is everything all at once </b>
-                        <br/>
-                    </p>
-                    <ul><TopicEntry key={"everything"} label={"everything"}/></ul>
+                        </p>
+                        <ul>{coolTopics.map(t => {
+                                    return(
+                                        <div className="inline">
+                                        <TopicEntry key={t} label={t}/>
+                                        </div>
+                                    )
+                                })}</ul>
+                    </div>
+                    
+                    <div className="hidden md:block">
+                        <p>
+                            <br/>
+                            <b>Here are some recently updated topics: </b>
+                            <br/>
+                        </p>
+                        <ul>{topics.map(t => <TopicEntry key={t} label={t}/>)}</ul>
+                    </div>
+
+                    <div>
+                        <p>
+                            <br/>
+                            <b>And here is everything all at once </b>
+                            <br/>
+                        </p>
+                        <ul><TopicEntry key={"everything"} label={"everything"}/></ul>
+                    </div>
+                    <hr className="block md:hidden mt-5 mb-5 border-black"/>
                 </BodyEntry>
             </div>
             <div 

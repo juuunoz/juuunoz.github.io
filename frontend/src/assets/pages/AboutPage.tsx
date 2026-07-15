@@ -5,11 +5,11 @@ import aboutMd from '../../markdown/about.md?raw'
 
 export const AboutPage = () => {
     return (
-    <div className="pt-[5vh] flex flex-col md:flex-row">
+    <div className="md:pt-[5vh] flex flex-col md:flex-row">
         <div className="w-full md:w-1/3 md:m-5 mt-6 ">
              <BodyEntry>
                 <img 
-                    className="object-contain ml-auto mr-auto"
+                    className="object-contain md:ml-auto md:mr-auto"
                     src="/profile.jpg"/>
                 <p className="text-right md:text-sm text-xs">
                     <br/>
@@ -20,11 +20,10 @@ export const AboutPage = () => {
                     junozhangworking (at) gmail (dot) com<br/>
                     website inspired by <a href="https://www.computerangel.blog/shop">computer angel</a><br/>
                     <br/>
-                    className="text-center sm:hidden"<br/>
                 </p>
             </BodyEntry>
         </div>
-        <div className="w-full md:w-2/3 md:m-5">
+        <div className="w-full md:w-2/3 md:m-5 mb-10">
              <BodyEntry>
               <Markdown>{aboutMd}</Markdown>
             </BodyEntry>

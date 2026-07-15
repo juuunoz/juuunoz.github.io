@@ -31,7 +31,7 @@ export const ProjectsPage = () => {
   }
       
   return (
-  <div className="pt-[5vh] flex flex-col md:flex-row">
+  <div className="md:pt-[5vh] flex flex-col md:flex-row">
       <div className="w-full md:w-1/3 md:m-5 mt-6 ">
           <BodyEntry>
               <ul>
@@ -41,9 +41,9 @@ export const ProjectsPage = () => {
                 }
               </ul>
           </BodyEntry>
-
+          <hr className="block md:hidden mt-5 mb-5 border-black"/>
       </div>
-      <div className="w-full md:w-2/3 md:m-5 max-h-[650px] overflow-scroll">
+      <div className="w-full md:w-2/3 md:m-5 md:max-h-[650px] max-h-[75vh] overflow-scroll">
           <BodyEntry>
             {projectFiles.map((item, index) => (
               <div 
