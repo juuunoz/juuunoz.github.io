@@ -160,7 +160,7 @@ function ThoughtsPage() {
                 </BodyEntry>
             </div>
             <div 
-                className="w-full md:w-2/3 md:m-5 max-h-[650px] overflow-scroll scrollbar-thumb-sky-700"
+                className="w-full md:w-2/3 md:m-5 max-h-[66vh] overflow-scroll scrollbar-thumb-sky-700"
                 onScroll={handleScroll}>
                 <BodyEntry>
                     {notes.map(n => <NoteEntry key={n.note_id} date={n.date.slice(0,10)} content={n.content}/>)}

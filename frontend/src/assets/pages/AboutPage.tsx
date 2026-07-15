@@ -11,11 +11,12 @@ export const AboutPage = () => {
                 <img 
                     className="object-contain md:ml-auto md:mr-auto"
                     src="/profile.jpg"/>
-                <p className="text-right md:text-sm text-xs">
+                <p className="text-right md:text-s text-xs">
                     <br/>
                     <a href="https://github.com/juuunoz">github</a><br/>
                     <a href="https://www.linkedin.com/in/juno-zhang/">linkedin</a><br/>
-                    resume<br/>
+                    <a href="https://drive.google.com/file/d/1Qk3NxfkvdFxtL9RfcLXfGzOcQ3kIGGT2/view?usp=sharing">resume</a>
+                    <br/>
                     <br/>
                     junozhangworking (at) gmail (dot) com<br/>
                     website inspired by <a href="https://www.computerangel.blog/shop">computer angel</a><br/>

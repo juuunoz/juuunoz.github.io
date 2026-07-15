@@ -3,6 +3,7 @@ import Markdown from "react-markdown"
 import { useRef } from "react"
 
 import project1 from '../../markdown/project1.md?raw'
+import project2 from '../../markdown/project1.md?raw'
 
 const ProjectEntry = ({children, title} : {children: React.ReactNode, title: string}) => {
     return (
@@ -15,7 +16,7 @@ const ProjectEntry = ({children, title} : {children: React.ReactNode, title: str
 
 export const ProjectsPage = () => {
   const projectRefs = useRef<HTMLDivElement[]>([]);
-  const projectFiles = [project1, project1, project1];
+  const projectFiles = [project1, project2];
   const projectTitles: string[] = [
     'reflections on making junozhang.com ', 
     'web-based party game (IN DEVELOPMENT)' 
@@ -43,7 +44,7 @@ export const ProjectsPage = () => {
           </BodyEntry>
           <hr className="block md:hidden mt-5 mb-5 border-black"/>
       </div>
-      <div className="w-full md:w-2/3 md:m-5 md:max-h-[650px] max-h-[75vh] overflow-scroll">
+      <div className="w-full md:w-2/3 md:m-5 md:max-h-[80vh] max-h-[80vh] overflow-scroll">
           <BodyEntry>
             {projectFiles.map((item, index) => (
               <div 
