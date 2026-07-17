@@ -28,5 +28,8 @@ jobs:
               rm -rf /var/www/junozhang.com/*
               cp -r dist/* /var/www/junozhang.com/
               chmod -R 755 /var/www/junozhang.com
+
+              # refresh express server
+              pm2 restart express
               
               echo 'Deployment to junozhang.com finished'
