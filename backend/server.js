@@ -8,9 +8,10 @@ const app = express();
 const db = pgp({
     host: '127.0.0.1',
     port: 5432,
-    database: 'postgres',
-    user: process.env.DBUSER,
-    password: process.env.DBPASS
+    database: process.env.PGDB,
+    user: process.env.PGUSER,
+    password: process.env.PGPASS,
+    connectionTimeoutMillis: 5000,
 });
 
 const PORT = process.env.PORT || 5000;
@@ -19,15 +20,12 @@ const PORT = process.env.PORT || 5000;
 app.use(cors()); // Enables Cross-Origin Resource Sharing
 app.use(express.json()); // Allows parsing of JSON request bodies
 
-//TODO: Fix error codes
-//FIXME: All topic strings may need to be pre-processed to be lower-cased, and spaces replaced with underscores
-
 // Sample API Route
 app.get('/test', (req, res) => {
   res.json({ message: "Hello from the backend server!" });
 });
 
-app.get('/testdb', (req, res) => {
+app.get('/api/testdb', (req, res) => {
   db.any('SELECT * FROM notes')
     .then((data) => {
       res.status(200).json({data});
@@ -38,7 +36,7 @@ app.get('/testdb', (req, res) => {
 })
 
 // Make new note
-app.post('/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
   const { note_id, date, content, topics } = req.body;
 
   if (!content || !Array.isArray(topics)) {
@@ -72,7 +70,7 @@ app.post('/notes', (req, res) => {
 // Using the cursor as the topmost note, return limit most recent notes
 // Get all notes /notes?cursor=none&limit=10&topic=none)
 // Filtering option /notes?topic=misc
-app.get('/notes', (req, res) => {
+app.get('/api/notes', (req, res) => {
     const cursor = req.query.cursor || "none";
     const limit = parseInt(req.query.limit) || 10;
     const topic = req.query.topic || "none"
@@ -87,9 +85,7 @@ app.get('/notes', (req, res) => {
       .then((data) => {
         return res.status(200).json(data);
       }).catch((error) => {
-        if (error.result.rowCount === 0)
-          return res.status(204).json({message: "Body tea, no notes!"})
-        return res.status(500).json({message: error})
+        return res.status(500).json({message: error.message || String(error)});
       })
     } else if (cursor === "none") {
       // give limit number of notes in the specified topic
@@ -103,9 +99,7 @@ app.get('/notes', (req, res) => {
         .then((data) => {
         return res.status(200).json(data);
         }).catch((error) => {
-          if (error.result.rowCount === 0)
-            return res.status(204).json({message: "Body tea, no notes!"})
-          return res.status(500).json({message: error})
+          return res.status(500).json({message: error.message || String(error)});
         })
     } else if (topic === "none") {
       // give limit number of notes from the given cursor
@@ -118,9 +112,7 @@ app.get('/notes', (req, res) => {
       .then((data) => {
         return res.status(200).json(data);
       }).catch((error) => {
-        if (error.result.rowCount === 0)
-          return res.status(204).json({message: "Body tea, no notes!"})
-        return res.status(500).json({message: error})
+        return res.status(500).json({message: error.message || String(error)});
       })
     }
     else {
@@ -137,15 +129,13 @@ app.get('/notes', (req, res) => {
         .then((data) => {
         return res.status(200).json(data);
       }).catch((error) => {
-        if (error.result?.rowCount === 0)
-          return res.status(204).json({message: "Body tea, no notes!"})
-        return res.status(500).json({message: error})
+        return res.status(500).json({message: error.message || String(error)});
       })
     }
 });
 
 // Get one note
-app.get('/notes/:id', (req, res) => {
+app.get('/api/notes/:id', (req, res) => {
     db.one('SELECT * FROM notes WHERE notes.note_id = $1',
       [req.params.id]
     ).then((data) => {
@@ -153,13 +143,13 @@ app.get('/notes/:id', (req, res) => {
     }).catch((error) => {
       if (error.result.rowCount === 0)
         return res.status(204).json({ message: "Note not found." });
-      return res.status(500).json({ message: error });
+      return res.status(500).json({message: error.message || String(error)});
     })
 });
 
 // Update note topics or content
 // TODO: rewrite in promise format for consistency
-app.patch('/notes/:id', async (req, res) => {
+app.patch('/api/notes/:id', async (req, res) => {
   try {
     const { topics, content } = req.body;
 
@@ -206,26 +196,25 @@ app.patch('/notes/:id', async (req, res) => {
     return res.json({ message: 'Updated successfully' });
     
   } catch (err) {
-    return res.status(500).json({message: 'Failed to update note'});
+    return res.status(500).json({message: error.message || String(error)});
   }
 });
 
 // Delete one note
-app.delete('/notes/:id', (req, res) => {
+app.delete('/api/notes/:id', (req, res) => {
     db.result('DELETE FROM notes WHERE note_id = $1 ', 
       [req.params.id]
     ).then((data) => {
       if (data.rowCount == 0)
         return res.status(204).json({ message: `Note ${req.params.id} not found. Nothing deleted.` })
-      else
-        return res.status(200).json({ message: `Note ${req.params.id} succesfully deleted.`})
+      return res.status(200).json({ message: `Note ${req.params.id} succesfully deleted.`})
     }).catch((error) => {
       return res.status(500).json({ message: error })
     })
 });
 
 // Get all unique topics, (how to sort from most recently updated?)
-app.get('/topics', (req, res) => {
+app.get('/api/topics', (req, res) => {
   const limit = parseInt(req.query.limit) || 5;
   
   db.any(`
@@ -237,16 +226,16 @@ app.get('/topics', (req, res) => {
     DESC LIMIT 5;`, 
     [limit]
   ).then((data) => {
-      return res.status(200).json(data)
+    if (data.rowCount == 0)
+      return res.status(204).json({ message: `Topic ${req.params.id} not found. Nothing deleted.` })
+    return res.status(200).json(data)
   }).catch((error) => {
-    if (error.result.rowCount === 0)
-      return res.status(204).json({message: `No topics.`})
-    return res.status(500).json({message: error})
+    return res.status(500).json({message: error.message || String(error)});
   })
 })
 
 // Delete topic (also deletes notes relevant to the topic)
-app.delete('/topics/:id', (req, res) => {
+app.delete('/api/topics/:id', (req, res) => {
   db.result(`
     DELETE FROM notes 
     WHERE notes.note_id in 
@@ -256,7 +245,7 @@ app.delete('/topics/:id', (req, res) => {
       return res.status(204).json({ message: `Topic ${req.params.id} not found. Nothing deleted.` })
     return res.status(200).json({ message: `Topic ${req.params.id} succesfully deleted.`})
   }).catch((error) => {
-    return res.status(500).json({message: error})
+    return res.status(500).json({message: error.message || String(error)});
   })
 });
 
