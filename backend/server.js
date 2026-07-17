@@ -14,7 +14,7 @@ const db = pgp({
     connectionTimeoutMillis: 5000,
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 4000;
 
 // Middleware
 app.use(cors()); // Enables Cross-Origin Resource Sharing
@@ -195,7 +195,7 @@ app.patch('/api/notes/:id', async (req, res) => {
 
     return res.json({ message: 'Updated successfully' });
     
-  } catch (err) {
+  } catch (error) {
     return res.status(500).json({message: error.message || String(error)});
   }
 });
