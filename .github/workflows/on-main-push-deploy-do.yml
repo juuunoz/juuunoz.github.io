@@ -30,6 +30,7 @@ jobs:
               chmod -R 755 /var/www/junozhang.com
 
               # refresh express server
+              cd ~/deploy/build/backend
               pm2 restart express
               
               echo 'Deployment to junozhang.com finished'
