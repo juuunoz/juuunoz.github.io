@@ -29,8 +29,8 @@ jobs:
               cp -r dist/* /var/www/junozhang.com/
               chmod -R 755 /var/www/junozhang.com
 
-              # refresh express server
-              cd ~/deploy/build/backend
-              pm2 restart express
+              # refresh express server (move pm2 process onto deployer)
+              # cd ~/deploy/build/backend
+              # pm2 restart express
               
               echo 'Deployment to junozhang.com finished'
