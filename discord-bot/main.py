@@ -47,7 +47,7 @@ class MyClient(discord.Client):
             "content": content
         }
 
-        endpoint = url + "/notes"
+        endpoint = url + "/api" + "/notes"
         response = requests.post(endpoint, json=payload)
 
         if response.status_code == 200 or response.status_code == 201:
@@ -56,6 +56,7 @@ class MyClient(discord.Client):
             print(response.json())
         else:
             print(f"Failed with status code: {response.status_code}")
+            print(f"Message: {response.reason}")
 
     async def on_message_edit(self, before, after):
         content, topics = extract_hashtags_regex(after.content)
@@ -65,6 +66,7 @@ class MyClient(discord.Client):
             "content": content
         }
 
+        endpoint = url  + "/api" + "/notes/" + after.id
         response = requests.patch(endpoint, json=payload)
 
         if response.status_code == 200 or response.status_code == 201:

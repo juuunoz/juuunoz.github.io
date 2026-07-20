@@ -4,17 +4,18 @@ const cors = require('cors');
 const pgp = require('pg-promise')();
 require('dotenv').config();
 
+const PORT = process.env.PORT || 4000;
 const app = express();
 const db = pgp({
     host: '127.0.0.1',
-    port: 5432,
+    port: process.env.PGPORT,
     database: process.env.PGDB,
     user: process.env.PGUSER,
     password: process.env.PGPASS,
     connectionTimeoutMillis: 5000,
 });
 
-const PORT = process.env.PORT || 4000;
+
 
 // Middleware
 app.use(cors()); // Enables Cross-Origin Resource Sharing
@@ -63,7 +64,7 @@ app.post('/api/notes', (req, res) => {
       });
     })
     .catch((error) => {
-      res.status(500).json({ message: error });
+      res.status(500).json({ message: error.message || String(error) });
     });
 });
 
