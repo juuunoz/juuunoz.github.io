@@ -66,7 +66,7 @@ class MyClient(discord.Client):
             "content": content
         }
 
-        endpoint = url  + "/api" + "/notes/" + after.id
+        endpoint = url  + "/api" + "/notes/" + str(after.id)
         response = requests.patch(endpoint, json=payload)
 
         if response.status_code == 200 or response.status_code == 201:
