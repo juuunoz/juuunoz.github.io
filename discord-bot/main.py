@@ -51,8 +51,17 @@ class MyClient(discord.Client):
         response = requests.post(endpoint, json=payload)
 
         if response.status_code == 200 or response.status_code == 201:
-            print("Success!")
             print(topics)
+            print(response.json())
+        else:
+            print(f"Failed with status code: {response.status_code}")
+            print(f"Message: {response.reason}")
+
+    async def on_message_delete(self, message):
+        endpoint = url + "/api" + "/notes" + "/" + str(message.id)
+        response = requests.delete(endpoint)
+        
+        if response.status_code == 200 or response.status_code == 201:
             print(response.json())
         else:
             print(f"Failed with status code: {response.status_code}")

@@ -206,11 +206,13 @@ app.delete('/api/notes/:id', (req, res) => {
     db.result('DELETE FROM notes WHERE note_id = $1 ', 
       [req.params.id]
     ).then((data) => {
-      if (data.rowCount == 0)
-        return res.status(204).json({ message: `Note ${req.params.id} not found. Nothing deleted.` })
-      return res.status(200).json({ message: `Note ${req.params.id} succesfully deleted.`})
+      db.result(`DELETE FROM topics WHERE note_id = $1`,
+        [req.params.id]
+      ).then((data) => {
+        return res.status(200).json({ message: `Note ${req.params.id} succesfully deleted.`})
+      })
     }).catch((error) => {
-      return res.status(500).json({ message: error })
+      return res.status(500).json({ message: error.message || String(error) })
     })
 });
 
