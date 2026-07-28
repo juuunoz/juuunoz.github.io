@@ -21,7 +21,7 @@ def extract_hashtags_regex(text):
     cleaned = HASHTAG_RE.sub('', text)
 
     if tags:
-        new_tags = [tag.strip()[1:] for tag in list(tags[0]) if tag != '']
+        new_tags = [list(tag)[0].strip()[1:] for tag in tags if tag != '']
     else:
         new_tags = []
 
