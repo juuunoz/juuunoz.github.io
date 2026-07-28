@@ -1,5 +1,5 @@
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NavbarInstance } from './assets/Navbar'
 
 import ThoughtsPage from './assets/pages/ThoughtsPage';
@@ -14,15 +14,23 @@ import { ProjectsPage } from './assets/pages/ProjectsPage';
   
 
 function App() {
-  const [bodyContentNumber, setBodyContentNumber] = useState(0);
+  const [selectedTab, setSelectedTab] = useState(() => {
+    const saved = sessionStorage.getItem('lastSelectedTab')
+    return saved ? parseInt(saved, 10) : 0
+  });
+
+  useEffect(() => {
+        sessionStorage.setItem('lastSelectedTab', selectedTab.toString())
+    }, [selectedTab])
+  
 
   return (
     <div className="center  ml-auto mr-auto md:w-[65vw] w-[90vw]">
       <NavbarInstance 
-        setContent={setBodyContentNumber}/>
-      {bodyContentNumber === 0 ? <AboutPage></AboutPage>  : <></>}
-      {bodyContentNumber === 1 ? <ProjectsPage></ProjectsPage>  : <></>}
-      {bodyContentNumber === 2 ? <ThoughtsPage></ThoughtsPage>  : <></>}
+        setContent={setSelectedTab}/>
+      {selectedTab === 0 ? <AboutPage></AboutPage>  : <></>}
+      {selectedTab === 1 ? <ProjectsPage></ProjectsPage>  : <></>}
+      {selectedTab === 2 ? <ThoughtsPage></ThoughtsPage>  : <></>}
     </div>
     
   )
