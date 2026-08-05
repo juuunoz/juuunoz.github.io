@@ -56,7 +56,7 @@ function ThoughtsPage() {
         return (
             <li 
                 onClick={handleClick}
-                className="inline md:block break-words hover:outline outline-1 p-1">
+                className="inline md:block break-words hover:outline outline-1 p-1 cursor-pointer">
                 {label}
             </li>)
     }
@@ -152,9 +152,16 @@ function ThoughtsPage() {
                         <p>
                             <br/>
                             <b>And here is everything all at once </b>
-                            <br/>
                         </p>
                         <ul><TopicEntry key={"everything"} label={"everything"}/></ul>
+                        
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <p className="cursor-pointer">
+                            employable mode enabled
+                        </p>
                     </div>
                     <hr className="block md:hidden mt-5 mb-5 border-black"/>
                 </BodyEntry>

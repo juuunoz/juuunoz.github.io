@@ -26,7 +26,7 @@ export const ProjectsPage = () => {
       return (
           <li 
               onClick={() => {projectRefs.current[index].scrollIntoView({behavior: "smooth"})}}
-              className="break-words hover:outline outline-1 p-1">
+              className="break-words hover:outline outline-1 p-1 cursor-pointer">
               {label}
           </li>)
   }

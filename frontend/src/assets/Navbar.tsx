@@ -48,10 +48,11 @@ const Navbar = ({setContent} : {setContent: Dispatch<SetStateAction<number>>}) =
     return (
         <ul 
             className="bg-white relative justify-center items-center flex w-[100%] p-1 border-solid border-black sticky top-0 z-50 text-xs">
+            <Cursor position={position}/>
             <Tab setPosition={setPosition} name="About" onClick={() => setContent(0)}/>
             <Tab setPosition={setPosition} name="Projects" onClick={() => setContent(1)}/>
             <Tab setPosition={setPosition} name="Thoughts" onClick={() => setContent(2)}/>
-            <Cursor position={position}/>
+            
         </ul>
     );
 };
@@ -60,7 +61,7 @@ const Cursor = ({position} : {position: Position}) => {
     return (
         <motion.li 
             animate={position}
-            className="absolute mt-6 z-0 w-36 bg-black h-px" />
+            className="absolute mt-6 z-0 bg-black h-px" />
     );
 };
 
