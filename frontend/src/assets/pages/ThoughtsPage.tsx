@@ -12,12 +12,16 @@ interface Topic {
   topic: string;
 }
 
-const coolTopics = ["apples", "bananas", "carrots"]
-
 function ThoughtsPage() {
+    const [selectTopics, setSelectTopics] = useState<string[]>([]);
     const [notes, setNotes] = useState<Note[]>([]); 
     const [topics, setTopics] = useState<string[]>([]);
     const [currentTopic, setCurrentTopic] = useState<string>("none");
+
+    useEffect(() => {
+        const temp = import.meta.env.VITE_SELECTTOPICS;
+        setSelectTopics(temp.split(','));
+    }, [selectTopics])
 
     const NoteEntry = ({date, content} : {date: string, content: string}) => {
     return (
@@ -130,7 +134,7 @@ function ThoughtsPage() {
                         <b> Below are some handpicked topics that I'm most interested in right now: </b>
                         <br/>
                         </p>
-                        <ul>{coolTopics.map(t => {
+                        <ul>{selectTopics.map(t => {
                                     return(
                                         <div className="inline">
                                         <TopicEntry key={t} label={t}/>
