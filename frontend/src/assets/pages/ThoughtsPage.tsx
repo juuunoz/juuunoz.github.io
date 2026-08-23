@@ -1,5 +1,7 @@
 import { BodyEntry } from "../BodyEntry"
 import { useState, useEffect } from "react"
+import Markdown from "react-markdown"
+import remarkGfm from 'remark-gfm';
 import { fetchNotes, fetchTopics } from "../service"
 
 interface Note {
@@ -21,17 +23,20 @@ function ThoughtsPage() {
     useEffect(() => {
         const temp = import.meta.env.VITE_SELECTTOPICS;
         setSelectTopics(temp.split(','));
-    }, [selectTopics])
+    }, [])
 
     const NoteEntry = ({date, content} : {date: string, content: string}) => {
-    return (
-        <div
-            className="grid grid-cols-5 mb-10">
-            <div className="col-1 text-base">{date}</div>
-            <div className="col-span-4">{content}</div>
-        </div>
-    )
-}
+
+        return (
+            <div
+                className="grid grid-cols-5 mb-10">
+                <div className="col-1 text-base">{date}</div>
+                <div className="col-span-4 whitespace-pre-line">
+                    <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
+                </div>
+            </div>
+        )
+    }
 
     const TopicEntry = ({label} : {label: string}) => {
         const handleClick = () => {
@@ -127,12 +132,16 @@ function ThoughtsPage() {
                 <BodyEntry>
                     <div>
                         <p>
-                        These notes come from a Discord bot I configured to clean, categorize, and publish my messages. I text it throughout my day. <br/>
-                        <br/>
-                        <div className="hidden md:block">They are a collection of scattered thoughts and feelings on a variety of different topics. <br/>
-                        <br/></div>
-                        <b> Below are some handpicked topics that I'm most interested in right now: </b>
-                        <br/>
+                            These notes come from a Discord bot I configured to clean, categorize, and publish my messages. I text it throughout my day. <br/>
+                            <br/>
+                        </p>
+                        <p className="hidden md:block">
+                            They are a collection of scattered thoughts and feelings on a variety of different topics. <br/>
+                            <br/>
+                        </p>
+                        <p>
+                            <b> Below are some handpicked topics that I'm most interested in right now: </b>
+                            <br/>
                         </p>
                         <ul>{selectTopics.map(t => {
                                     return(
