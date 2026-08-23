@@ -51,7 +51,6 @@ function ThoughtsPage() {
                         content: n.content
                     }
                     ))
-                    console.log(newNotes)
                     setNotes([...newNotes])
                     
                 } else {
