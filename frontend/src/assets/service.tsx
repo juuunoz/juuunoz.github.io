@@ -17,7 +17,6 @@ export async function fetchNotes (limit: number, cursor: number, topic: string) 
         }
          
         const res = await response.json();
-        console.log(res.content)
         return res;
     } catch (err) {
         return err

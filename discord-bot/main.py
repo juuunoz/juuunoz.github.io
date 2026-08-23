@@ -14,18 +14,13 @@ url = os.getenv('SERVER_BASE')
 api_key = os.getenv('ACCESS_TOKEN')
 
 # Define regex for matching tags
-HASHTAG_RE = re.compile(r"( #\w+)|(#\w+)")
+HASHTAG_RE = re.compile(r"(#\w+)")
 
 def extract_hashtags_regex(text):
     tags = HASHTAG_RE.findall(text)
     cleaned = HASHTAG_RE.sub('', text)
 
-    if tags:
-        new_tags = [list(tag)[0].strip()[1:] for tag in tags if tag != '']
-    else:
-        new_tags = []
-
-    return cleaned, new_tags
+    return cleaned, tags
 
 def serialize_datetime(obj):
     if isinstance(obj, datetime.datetime):
@@ -39,6 +34,8 @@ class MyClient(discord.Client):
     async def on_message(self, message):
         content, topics = extract_hashtags_regex(message.content)
 
+        topics = [ topic[1:] for topic in topics]
+
         payload = {
             "note_id": str(message.id),
             "date": message.created_at.strftime("%Y-%m-%d %H:%M:%S"),
@@ -51,8 +48,10 @@ class MyClient(discord.Client):
         response = requests.post(endpoint, json=payload)
 
         if response.status_code == 200 or response.status_code == 201:
+            print("Received message:")
+            print(message.content)
+            print("Recovered topics: ")
             print(topics)
-            print(response.json())
         else:
             print(f"Failed with status code: {response.status_code}")
             print(f"Message: {response.reason}")
@@ -62,7 +61,8 @@ class MyClient(discord.Client):
         response = requests.delete(endpoint)
         
         if response.status_code == 200 or response.status_code == 201:
-            print(response.json())
+            print("Successfully delete note: ")
+            print(message.id)
         else:
             print(f"Failed with status code: {response.status_code}")
             print(f"Message: {response.reason}")
