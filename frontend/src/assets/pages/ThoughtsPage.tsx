@@ -28,7 +28,7 @@ function ThoughtsPage() {
     const NoteEntry = ({date, content} : {date: string, content: string}) => {
         return (
             <div
-                className="grid grid-cols-5 mb-10 prose prose-neutral">
+                className="grid grid-cols-5 mb-10">
                 <div className="col-1 text-base">{date}</div>
                 <div className="col-span-4 whitespace-pre-line ">
                     <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
@@ -129,15 +129,15 @@ function ThoughtsPage() {
             <div className="w-full md:w-1/3 md:m-5 mt-6 text-wrap ">
                 <BodyEntry>
                     <div>
-                        <p className="prose prose-neutral">
+                        <p>
                             These notes come from a Discord bot I configured to clean, categorize, and publish my messages. I text it throughout my day. <br/>
                             <br/>
                         </p>
-                        <p className="hidden md:block prose-prose-neutral">
+                        <p className="hidden md:block">
                             They are a collection of scattered thoughts and feelings on a variety of different topics. <br/>
                             <br/>
                         </p>
-                        <p className="prose prose-neutral">
+                        <p >
                             <b> Below are some handpicked topics that I'm most interested in right now: </b>
                             <br/>
                         </p>
@@ -151,7 +151,7 @@ function ThoughtsPage() {
                     </div>
                     
                     <div className="hidden md:block">
-                        <p className="prose prose-neutral">
+                        <p>
                             <br/>
                             <b>Here are some recently updated topics: </b>
                             <br/>
@@ -160,7 +160,7 @@ function ThoughtsPage() {
                     </div>
 
                     <div>
-                        <p className="prose prose-neutral">
+                        <p>
                             <br/>
                             <b>And here is everything all at once </b>
                         </p>
@@ -169,7 +169,7 @@ function ThoughtsPage() {
                         <br/>
                         <br/>
                         <br/>
-                        <p className="cursor-pointer prose prose-neutral">
+                        <p className="cursor-pointer">
                             employable mode enabled
                         </p>
                     </div>
@@ -177,7 +177,7 @@ function ThoughtsPage() {
                 </BodyEntry>
             </div>
             <div 
-                className="w-full md:w-2/3 md:m-5 max-h-[66vh] overflow-scroll scrollbar-thumb-sky-700"
+                className="w-full md:w-2/3 md:m-5 max-h-[80vh] overflow-scroll scrollbar-thumb-sky-700"
                 onScroll={handleScroll}>
                 <BodyEntry>
                     {notes.map(n => <NoteEntry key={n.note_id} date={n.date.slice(0,10)} content={n.content}/>)}

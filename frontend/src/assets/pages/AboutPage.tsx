@@ -11,7 +11,7 @@ export const AboutPage = () => {
                 <img 
                     className="object-contain w-[400px] md:w-[300px] md:ml-auto md:mr-0 ml-auto mr-auto"
                     src="/profile.jpg"/>
-                <p className="text-right text-s prose prose-neutral pr-16 md:pr-0">
+                <p className="text-right text-s pr-16 md:pr-0">
                     <br/>
                     <a href="https://github.com/juuunoz">github</a><br/>
                     <a href="https://www.linkedin.com/in/juno-zhang/">linkedin</a><br/>

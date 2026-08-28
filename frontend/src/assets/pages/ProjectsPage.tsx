@@ -27,7 +27,7 @@ export const ProjectsPage = () => {
       return (
           <li 
               onClick={() => {projectRefs.current[index].scrollIntoView({behavior: "smooth"})}}
-              className="break-words hover:outline outline-1 outline-[#404040] p-1 cursor-pointer">
+              className="break-words hover:outline outline-1 p-1 cursor-pointer">
               {label}
           </li>)
   }
@@ -45,7 +45,7 @@ export const ProjectsPage = () => {
           </BodyEntry>
           <hr className="block md:hidden mt-5 mb-5 border-black"/>
       </div>
-      <div className="w-full md:w-2/3 md:m-5 md:max-h-[80vh] max-h-[80vh] overflow-scroll">
+      <div className="w-full md:w-2/3 md:m-5 max-h-[80vh] overflow-scroll">
           <BodyEntry>
             {projectFiles.map((item, index) => (
               <div 
