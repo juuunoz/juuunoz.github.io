@@ -25,7 +25,7 @@ const Tab = ({name, setPosition, onClick} : {name:string, setPosition: Dispatch<
                 });
             }}
             className="relative z-10 block cursor-pointer md:px-3 px-1 py-1.5 
-            text-s prose prose-neutral
+            text-s
             md:text-base">
             {name}
         </li>
