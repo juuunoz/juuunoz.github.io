@@ -25,7 +25,8 @@ const Tab = ({name, setPosition, onClick} : {name:string, setPosition: Dispatch<
                 });
             }}
             className="relative z-10 block cursor-pointer md:px-3 px-1 py-1.5 
-            text-s text-black md:text-base">
+            text-s prose prose-neutral
+            md:text-base">
             {name}
         </li>
     );
@@ -60,7 +61,7 @@ const Cursor = ({position} : {position: Position}) => {
     return (
         <motion.li 
             animate={position}
-            className="absolute mt-6 z-0 bg-[#374152] h-px" />
+            className="absolute mt-6 z-0 bg-[#404040] h-px" />
     );
 };
 

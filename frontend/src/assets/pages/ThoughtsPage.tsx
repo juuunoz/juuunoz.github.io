@@ -26,7 +26,6 @@ function ThoughtsPage() {
     }, [])
 
     const NoteEntry = ({date, content} : {date: string, content: string}) => {
-
         return (
             <div
                 className="grid grid-cols-5 mb-10">
@@ -64,7 +63,7 @@ function ThoughtsPage() {
         return (
             <li 
                 onClick={handleClick}
-                className="inline md:block break-words hover:outline outline-1 outline-[#374152] p-1 cursor-pointer">
+                className="inline md:block break-words hover:outline outline-1 p-1 outline-[#404040] cursor-pointer ">
                 {label}
             </li>)
     }
@@ -130,15 +129,15 @@ function ThoughtsPage() {
             <div className="w-full md:w-1/3 md:m-5 mt-6 text-wrap ">
                 <BodyEntry>
                     <div>
-                        <p>
+                        <p className="prose prose-neutral">
                             These notes come from a Discord bot I configured to clean, categorize, and publish my messages. I text it throughout my day. <br/>
                             <br/>
                         </p>
-                        <p className="hidden md:block">
+                        <p className="hidden md:block prose-prose-neutral">
                             They are a collection of scattered thoughts and feelings on a variety of different topics. <br/>
                             <br/>
                         </p>
-                        <p>
+                        <p className="prose prose-neutral">
                             <b> Below are some handpicked topics that I'm most interested in right now: </b>
                             <br/>
                         </p>
@@ -152,7 +151,7 @@ function ThoughtsPage() {
                     </div>
                     
                     <div className="hidden md:block">
-                        <p>
+                        <p className="prose prose-neutral">
                             <br/>
                             <b>Here are some recently updated topics: </b>
                             <br/>
@@ -161,7 +160,7 @@ function ThoughtsPage() {
                     </div>
 
                     <div>
-                        <p>
+                        <p className="prose prose-neutral">
                             <br/>
                             <b>And here is everything all at once </b>
                         </p>
@@ -169,7 +168,8 @@ function ThoughtsPage() {
                         
                         <br/>
                         <br/>
-                        <p className="cursor-pointer">
+                        <br/>
+                        <p className="cursor-pointer prose prose-neutral">
                             employable mode enabled
                         </p>
                     </div>

@@ -25,7 +25,7 @@ function App() {
   
 
   return (
-    <div className="center  ml-auto mr-auto md:w-[65vw] w-[90vw] text-[#374152]">
+    <div className="center ml-auto mr-auto md:w-[65vw] w-[90vw] ">
       <NavbarInstance 
         setContent={setSelectedTab}/>
       {selectedTab === 0 ? <AboutPage></AboutPage>  : <></>}

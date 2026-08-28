@@ -8,7 +8,7 @@ import project2 from '../../markdown/project2.md?raw'
 
 const ProjectEntry = ({children, title} : {children: React.ReactNode, title: string}) => {
     return (
-      <div className="mb-20 prose">
+      <div className="mb-20 prose prose-neutral">
         <p className="text-2xl mb-5">{title}</p>
         {children}
       </div>
@@ -27,7 +27,7 @@ export const ProjectsPage = () => {
       return (
           <li 
               onClick={() => {projectRefs.current[index].scrollIntoView({behavior: "smooth"})}}
-              className="break-words hover:outline outline-1 outline-[#374152] p-1 cursor-pointer">
+              className="break-words hover:outline outline-1 outline-[#404040] p-1 cursor-pointer">
               {label}
           </li>)
   }
