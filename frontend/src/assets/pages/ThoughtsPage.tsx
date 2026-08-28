@@ -28,7 +28,7 @@ function ThoughtsPage() {
     const NoteEntry = ({date, content} : {date: string, content: string}) => {
         return (
             <div
-                className="grid grid-cols-5 mb-10">
+                className="grid grid-cols-5 mb-10 prose prose-neutral">
                 <div className="col-1 text-base">{date}</div>
                 <div className="col-span-4 whitespace-pre-line ">
                     <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
