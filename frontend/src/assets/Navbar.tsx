@@ -25,8 +25,7 @@ const Tab = ({name, setPosition, onClick} : {name:string, setPosition: Dispatch<
                 });
             }}
             className="relative z-10 block cursor-pointer md:px-3 px-1 py-1.5 
-            text-s text-black
-            md:text-base">
+            text-s text-black md:text-base">
             {name}
         </li>
     );
@@ -47,7 +46,7 @@ const Navbar = ({setContent} : {setContent: Dispatch<SetStateAction<number>>}) =
 
     return (
         <ul 
-            className="bg-white relative justify-center items-center flex w-[100%] p-1 border-solid border-black sticky top-0 z-50 text-xs">
+            className="bg-white relative justify-center items-center flex w-[100%] p-1 border-solid border-black sticky top-0 z-50 text-xs text-[#374152]">
             <Cursor position={position}/>
             <Tab setPosition={setPosition} name="About" onClick={() => setContent(0)}/>
             <Tab setPosition={setPosition} name="Projects" onClick={() => setContent(1)}/>
@@ -61,7 +60,7 @@ const Cursor = ({position} : {position: Position}) => {
     return (
         <motion.li 
             animate={position}
-            className="absolute mt-6 z-0 bg-black h-px" />
+            className="absolute mt-6 z-0 bg-[#374152] h-px" />
     );
 };
 

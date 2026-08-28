@@ -31,7 +31,7 @@ function ThoughtsPage() {
             <div
                 className="grid grid-cols-5 mb-10">
                 <div className="col-1 text-base">{date}</div>
-                <div className="col-span-4 whitespace-pre-line">
+                <div className="col-span-4 whitespace-pre-line ">
                     <Markdown remarkPlugins={[remarkGfm]}>{content}</Markdown>
                 </div>
             </div>
@@ -64,7 +64,7 @@ function ThoughtsPage() {
         return (
             <li 
                 onClick={handleClick}
-                className="inline md:block break-words hover:outline outline-1 p-1 cursor-pointer">
+                className="inline md:block break-words hover:outline outline-1 outline-[#374152] p-1 cursor-pointer">
                 {label}
             </li>)
     }
@@ -126,7 +126,7 @@ function ThoughtsPage() {
     }, [])
 
     return (
-        <div className="md:pt-[5vh] flex flex-col md:flex-row">
+        <div className="md:pt-[2vh] flex flex-col md:flex-row">
             <div className="w-full md:w-1/3 md:m-5 mt-6 text-wrap ">
                 <BodyEntry>
                     <div>
@@ -167,8 +167,6 @@ function ThoughtsPage() {
                         </p>
                         <ul><TopicEntry key={"everything"} label={"everything"}/></ul>
                         
-                        <br/>
-                        <br/>
                         <br/>
                         <br/>
                         <p className="cursor-pointer">

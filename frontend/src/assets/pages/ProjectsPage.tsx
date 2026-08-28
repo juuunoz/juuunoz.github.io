@@ -1,13 +1,14 @@
 import { BodyEntry } from "../BodyEntry"
 import Markdown from "react-markdown"
+import remarkGfm from "remark-gfm"
 import { useRef } from "react"
 
 import project1 from '../../markdown/project1.md?raw'
-import project2 from '../../markdown/project1.md?raw'
+import project2 from '../../markdown/project2.md?raw'
 
 const ProjectEntry = ({children, title} : {children: React.ReactNode, title: string}) => {
     return (
-      <div className="mb-20">
+      <div className="mb-20 prose">
         <p className="text-2xl mb-5">{title}</p>
         {children}
       </div>
@@ -18,21 +19,21 @@ export const ProjectsPage = () => {
   const projectRefs = useRef<HTMLDivElement[]>([]);
   const projectFiles = [project1, project2];
   const projectTitles: string[] = [
-    'reflections on making junozhang.com ', 
-    'web-based party game (IN DEVELOPMENT)' 
+    'Reflections on making junozhang.com ', 
+    'party game! (IN DEVELOPMENT)' 
     ]
 
   const ProjectLabel = ({label, index} : {label: string, index: number}) => {
       return (
           <li 
               onClick={() => {projectRefs.current[index].scrollIntoView({behavior: "smooth"})}}
-              className="break-words hover:outline outline-1 p-1 cursor-pointer">
+              className="break-words hover:outline outline-1 outline-[#374152] p-1 cursor-pointer">
               {label}
           </li>)
   }
       
   return (
-  <div className="md:pt-[5vh] flex flex-col md:flex-row">
+  <div className="md:pt-[2vh] flex flex-col md:flex-row">
       <div className="w-full md:w-1/3 md:m-5 mt-6 ">
           <BodyEntry>
               <ul>
@@ -53,7 +54,7 @@ export const ProjectsPage = () => {
               >
                 <ProjectEntry
                   title={projectTitles[index]}>
-                  <Markdown>{projectFiles[index]}</Markdown>
+                    <Markdown remarkPlugins={[remarkGfm]}>{projectFiles[index]}</Markdown>
                 </ProjectEntry>
               </div>
             ))}
